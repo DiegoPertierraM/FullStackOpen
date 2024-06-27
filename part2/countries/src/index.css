@@ -1,0 +1,19 @@
+body {
+  margin: 1rem;
+  box-sizing: border-box;
+}
+
+ul,
+p {
+  padding: 0;
+}
+
+ul {
+  list-style: none;
+  margin-block: 0.5rem;
+}
+
+.languages {
+  list-style: initial;
+  padding-inline-start: 1.5rem;
+}

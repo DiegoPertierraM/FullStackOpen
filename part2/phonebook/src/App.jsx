@@ -133,6 +133,5 @@ const App = () => {
     </div>
   );
 };
-333333;
 
 export default App;
