@@ -13,9 +13,12 @@ const App = () => {
   const [messageType, setMessageType] = useState("success");
 
   useEffect(() => {
-    personService.getAll().then((response) => {
-      setPersons(response.data);
-    });
+    personService
+      .getAll()
+      .then((response) => {
+        setPersons(response.data);
+      })
+      .catch((error) => console.log(error.response.data.error));
   }, []);
 
   const addPerson = (event) => {
@@ -62,12 +65,19 @@ const App = () => {
         setPersons(persons.concat(response.data));
         setNewName("");
         setNewNumber("");
+        setMessageType("success");
         setSuccessfulMessage(`Added ${response.data.name}`);
         setTimeout(() => {
           setSuccessfulMessage(null);
         }, 5000);
       })
-      .catch((error) => console.log("error", error));
+      .catch((error) => {
+        setMessageType("error");
+        setSuccessfulMessage(error.response.data.error);
+        setTimeout(() => {
+          setSuccessfulMessage(null);
+        }, 5000);
+      });
   };
 
   const searchPerson = (event) => {
@@ -94,7 +104,13 @@ const App = () => {
           .then(() => {
             setPersons(persons.filter((p) => person.id !== p.id));
           })
-          .catch((error) => console.log(error));
+          .catch((error) => {
+            setMessageType("error");
+            setSuccessfulMessage(error.response.data.error);
+            setTimeout(() => {
+              setSuccessfulMessage(null);
+            }, 5000);
+          });
       }
     };
     return handler;
